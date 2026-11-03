@@ -1,0 +1,144 @@
+@import "tailwindcss";
+@custom-variant dark (&:where(.dark, .dark *));
+
+@theme {
+  --font-sans: 'Plus Jakarta Sans', system-ui, -apple-system, sans-serif;
+  --font-mono: 'JetBrains Mono', ui-monospace, SFMono-Regular, monospace;
+  --font-orbitron: 'Orbitron', system-ui, sans-serif;
+  --font-tech: 'Share Tech Mono', ui-monospace, monospace;
+
+  --color-cyber-obsidian: #05050A;
+  --color-cyber-dark: #090912;
+  --color-cyber-surface: #0e0e1a;
+  --color-cyber-cyan: #00f0ff;
+  --color-cyber-magenta: #ff007f;
+  --color-cyber-lime: #39ff14;
+  --color-cyber-amber: #ffb703;
+}
+
+@layer base {
+  body {
+    background-color: #05050A;
+    color: #e2e8f0;
+    font-family: var(--font-sans);
+  }
+  
+  h1, h2, h3, .font-orbitron {
+    font-family: 'Orbitron', 'Plus Jakarta Sans', sans-serif;
+  }
+
+  code, kbd, samp, pre, .font-tech, .font-mono {
+    font-family: 'Share Tech Mono', 'JetBrains Mono', monospace;
+  }
+}
+
+/* CRT Monitor Scanline Overlay */
+.scanline-overlay {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100vw;
+  height: 100vh;
+  pointer-events: none;
+  z-index: 999;
+  background: linear-gradient(
+    rgba(18, 16, 16, 0) 50%, 
+    rgba(0, 0, 0, 0.25) 50%
+  ), linear-gradient(
+    90deg,
+    rgba(255, 0, 0, 0.03),
+    rgba(0, 255, 0, 0.01),
+    rgba(0, 0, 255, 0.03)
+  );
+  background-size: 100% 3px, 6px 100%;
+  opacity: 0.65;
+}
+
+/* Text Glitch Effect on Hover for Headings */
+@keyframes textGlitch {
+  0% {
+    text-shadow: 2px 0 0 #ff007f, -2px 0 0 #00f0ff;
+    transform: translate(0);
+  }
+  20% {
+    text-shadow: -2px 0 0 #ff007f, 2px 0 0 #00f0ff;
+    transform: translate(-1px, 1px);
+  }
+  40% {
+    text-shadow: 2px -1px 0 #ff007f, -2px 1px 0 #00f0ff;
+    transform: translate(1px, -1px);
+  }
+  60% {
+    text-shadow: -1px 2px 0 #ff007f, 1px -2px 0 #00f0ff;
+    transform: translate(-1px, -1px);
+  }
+  80% {
+    text-shadow: 2px 0 0 #ff007f, -2px 0 0 #00f0ff;
+    transform: translate(1px, 1px);
+  }
+  100% {
+    text-shadow: none;
+    transform: translate(0);
+  }
+}
+
+.glitch-hover:hover {
+  animation: textGlitch 0.28s cubic-bezier(0.25, 0.46, 0.45, 0.94) both;
+  color: #ffffff;
+}
+
+/* Permanent subtle glitch for highlight titles */
+.glitch-active {
+  text-shadow: 0 0 8px rgba(0, 240, 255, 0.6), 2px 0 0 rgba(255, 0, 127, 0.5), -2px 0 0 rgba(0, 240, 255, 0.5);
+}
+
+/* Cyber Matrix Glowing Borders */
+.neon-border-cyan {
+  border-color: rgba(0, 240, 255, 0.4);
+  box-shadow: 0 0 15px rgba(0, 240, 255, 0.15), inset 0 0 15px rgba(0, 240, 255, 0.05);
+}
+
+.neon-border-magenta {
+  border-color: rgba(255, 0, 127, 0.4);
+  box-shadow: 0 0 15px rgba(255, 0, 127, 0.15), inset 0 0 15px rgba(255, 0, 127, 0.05);
+}
+
+.neon-border-lime {
+  border-color: rgba(57, 255, 20, 0.4);
+  box-shadow: 0 0 15px rgba(57, 255, 20, 0.15), inset 0 0 15px rgba(57, 255, 20, 0.05);
+}
+
+/* High-tech Card Clip Corners */
+.cyber-card-clip {
+  clip-path: polygon(
+    0 0,
+    calc(100% - 14px) 0,
+    100% 14px,
+    100% 100%,
+    14px 100%,
+    0 calc(100% - 14px)
+  );
+}
+
+/* Printable pass container */
+@media print {
+  body * {
+    visibility: hidden;
+  }
+  .scanline-overlay {
+    display: none !important;
+  }
+  #printable-pass-container, #printable-pass-container * {
+    visibility: visible;
+  }
+  #printable-pass-container {
+    position: absolute;
+    left: 0;
+    top: 0;
+    width: 100%;
+    margin: 0;
+    padding: 20px;
+    background: #ffffff !important;
+    color: #000000 !important;
+  }
+}

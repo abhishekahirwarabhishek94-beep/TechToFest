@@ -1,0 +1,6 @@
+{
+  "name": "TechToCheck 2026 - S.A.T.I. Vidisha Fest Portal",
+  "description": "Official college fest portal for TechToCheck 2026 at S.A.T.I. Vidisha featuring event modules, concurrency-aware schedule, analytical challenge rubric breakdown, and digital registration pass generator.",
+  "requestFramePermissions": [],
+  "majorCapabilities": ["MAJOR_CAPABILITY_SERVER_SIDE_GEMINI_API"]
+}
