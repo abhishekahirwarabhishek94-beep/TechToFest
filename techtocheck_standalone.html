@@ -1,0 +1,1483 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>S.A.T.I. Vidisha — TechToCheck 2026</title>
+  <style>
+    :root {
+      --bg-core: #04070d;
+      --bg-surface: #0a0f1d;
+      --bg-card: rgba(13, 20, 38, 0.9);
+      --cyber-green: #00ff66;
+      --cyber-green-glow: rgba(0, 255, 102, 0.35);
+      --cyber-cyan: #00f0ff;
+      --cyber-cyan-glow: rgba(0, 240, 255, 0.35);
+      --cyber-amber: #ffb703;
+      --cyber-rose: #ff0055;
+      --text-main: #f0f6fc;
+      --text-dim: #8b949e;
+      --text-muted: #57606a;
+      --border-cyber: rgba(0, 240, 255, 0.25);
+      --border-green: rgba(0, 255, 102, 0.3);
+      --border-subtle: rgba(255, 255, 255, 0.08);
+      --font-mono: "SFMono-Regular", Consolas, "Liberation Mono", Menlo, Courier, monospace;
+      --font-sans: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, "Helvetica Neue", Arial, sans-serif;
+    }
+
+    *, *::before, *::after {
+      box-sizing: border-box;
+      margin: 0;
+      padding: 0;
+    }
+
+    html {
+      scroll-behavior: smooth;
+      font-family: var(--font-sans);
+      background-color: var(--bg-core);
+      color: var(--text-main);
+      line-height: 1.6;
+    }
+
+    body {
+      position: relative;
+      min-height: 100vh;
+      overflow-x: hidden;
+      background: radial-gradient(circle at 50% 0%, #0d1933 0%, #04070d 75%);
+    }
+
+    #matrixCanvas {
+      position: fixed;
+      top: 0;
+      left: 0;
+      width: 100vw;
+      height: 100vh;
+      pointer-events: none;
+      z-index: 0;
+      opacity: 0.28;
+    }
+
+    .container {
+      width: 100%;
+      max-width: 1180px;
+      margin: 0 auto;
+      padding: 0 1.5rem;
+      position: relative;
+      z-index: 1;
+    }
+
+    /* Header */
+    .site-header {
+      position: sticky;
+      top: 0;
+      left: 0;
+      width: 100%;
+      background: rgba(4, 7, 13, 0.92);
+      backdrop-filter: blur(14px);
+      -webkit-backdrop-filter: blur(14px);
+      border-bottom: 1px solid var(--border-cyber);
+      z-index: 100;
+    }
+
+    .nav-wrapper {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      height: 70px;
+    }
+
+    .brand-logo {
+      display: flex;
+      align-items: center;
+      gap: 0.75rem;
+      text-decoration: none;
+      color: var(--text-main);
+    }
+
+    .brand-icon-box {
+      width: 38px;
+      height: 38px;
+      background: rgba(0, 240, 255, 0.1);
+      border: 1px solid var(--cyber-cyan);
+      border-radius: 6px;
+      display: grid;
+      place-items: center;
+      color: var(--cyber-cyan);
+      box-shadow: 0 0 12px var(--cyber-cyan-glow);
+    }
+
+    .brand-title {
+      font-size: 1.15rem;
+      font-weight: 800;
+      letter-spacing: 0.04em;
+      font-family: var(--font-mono);
+      display: block;
+      line-height: 1.2;
+    }
+
+    .brand-sub {
+      font-size: 0.7rem;
+      color: var(--cyber-green);
+      letter-spacing: 0.08em;
+      font-family: var(--font-mono);
+      text-transform: uppercase;
+    }
+
+    .nav-links {
+      display: flex;
+      align-items: center;
+      gap: 1.5rem;
+      list-style: none;
+    }
+
+    .nav-link {
+      color: var(--text-dim);
+      text-decoration: none;
+      font-family: var(--font-mono);
+      font-size: 0.85rem;
+      transition: color 0.2s ease;
+    }
+
+    .nav-link:hover {
+      color: var(--cyber-cyan);
+    }
+
+    .nav-cta {
+      padding: 0.5rem 1.15rem;
+      background: rgba(0, 255, 102, 0.1);
+      border: 1px solid var(--cyber-green);
+      color: var(--cyber-green);
+      font-family: var(--font-mono);
+      font-size: 0.85rem;
+      font-weight: 700;
+      border-radius: 6px;
+      text-decoration: none;
+      transition: all 0.2s ease;
+    }
+
+    .nav-cta:hover {
+      background: var(--cyber-green);
+      color: #000;
+      box-shadow: 0 0 18px rgba(0, 255, 102, 0.6);
+    }
+
+    .menu-toggle-btn {
+      display: none;
+      background: transparent;
+      border: 1px solid var(--border-cyber);
+      color: var(--cyber-cyan);
+      padding: 0.45rem 0.75rem;
+      border-radius: 6px;
+      cursor: pointer;
+      font-family: var(--font-mono);
+      font-size: 0.85rem;
+    }
+
+    /* Hero */
+    .hero-section {
+      padding: 4.5rem 0 3.5rem 0;
+      text-align: center;
+    }
+
+    .hero-pill {
+      display: inline-flex;
+      align-items: center;
+      gap: 0.6rem;
+      padding: 0.35rem 1.15rem;
+      background: rgba(0, 240, 255, 0.08);
+      border: 1px solid var(--border-cyber);
+      border-radius: 999px;
+      font-family: var(--font-mono);
+      font-size: 0.825rem;
+      color: var(--cyber-cyan);
+      margin-bottom: 1.5rem;
+    }
+
+    .blink-dot {
+      width: 8px;
+      height: 8px;
+      border-radius: 50%;
+      background: var(--cyber-green);
+      box-shadow: 0 0 8px var(--cyber-green);
+      animation: blink 1.4s infinite;
+    }
+
+    @keyframes blink {
+      0%, 100% { opacity: 1; }
+      50% { opacity: 0.3; }
+    }
+
+    .hero-title {
+      font-size: clamp(2.2rem, 5.5vw, 3.8rem);
+      font-weight: 900;
+      letter-spacing: -0.02em;
+      margin-bottom: 1.25rem;
+      line-height: 1.15;
+    }
+
+    .gradient-heading {
+      background: linear-gradient(135deg, #ffffff 10%, var(--cyber-cyan) 60%, var(--cyber-green) 100%);
+      -webkit-background-clip: text;
+      -webkit-text-fill-color: transparent;
+      display: inline-block;
+    }
+
+    .hero-desc {
+      max-width: 720px;
+      margin: 0 auto 2.25rem auto;
+      font-size: 1.1rem;
+      color: var(--text-dim);
+      line-height: 1.6;
+    }
+
+    .hero-buttons {
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      gap: 1.25rem;
+      flex-wrap: wrap;
+      margin-bottom: 3.5rem;
+    }
+
+    .btn-cyber-primary {
+      display: inline-flex;
+      align-items: center;
+      gap: 0.5rem;
+      padding: 0.75rem 1.75rem;
+      background: linear-gradient(135deg, var(--cyber-green), #00b347);
+      color: #030712;
+      font-family: var(--font-mono);
+      font-weight: 800;
+      font-size: 0.9rem;
+      border-radius: 6px;
+      text-decoration: none;
+      cursor: pointer;
+      box-shadow: 0 0 18px var(--cyber-green-glow);
+      transition: all 0.25s ease;
+    }
+
+    .btn-cyber-primary:hover {
+      transform: translateY(-2px);
+      box-shadow: 0 0 26px rgba(0, 255, 102, 0.75);
+    }
+
+    .btn-cyber-secondary {
+      display: inline-flex;
+      align-items: center;
+      gap: 0.5rem;
+      padding: 0.75rem 1.75rem;
+      background: rgba(16, 24, 48, 0.8);
+      border: 1px solid var(--border-cyber);
+      color: var(--cyber-cyan);
+      font-family: var(--font-mono);
+      font-weight: 700;
+      font-size: 0.9rem;
+      border-radius: 6px;
+      text-decoration: none;
+      transition: all 0.2s ease;
+    }
+
+    .btn-cyber-secondary:hover {
+      background: rgba(0, 240, 255, 0.15);
+      transform: translateY(-2px);
+    }
+
+    .fest-stats-grid {
+      display: grid;
+      grid-template-columns: repeat(4, 1fr);
+      gap: 1.25rem;
+      max-width: 960px;
+      margin: 0 auto;
+      padding: 1.25rem;
+      background: var(--bg-card);
+      border: 1px solid var(--border-cyber);
+      border-radius: 12px;
+      box-shadow: 0 8px 32px rgba(0, 0, 0, 0.6);
+    }
+
+    .stat-item { text-align: center; }
+    .stat-val {
+      font-size: 2.1rem;
+      font-weight: 900;
+      font-family: var(--font-mono);
+      color: var(--cyber-cyan);
+      display: block;
+    }
+    .stat-tag {
+      font-size: 0.75rem;
+      color: var(--text-dim);
+      text-transform: uppercase;
+      font-family: var(--font-mono);
+    }
+
+    /* Section Headers */
+    .section-header {
+      text-align: center;
+      max-width: 740px;
+      margin: 0 auto 2.5rem auto;
+    }
+
+    .terminal-badge {
+      display: inline-flex;
+      align-items: center;
+      gap: 0.5rem;
+      padding: 0.3rem 0.85rem;
+      background: rgba(0, 255, 102, 0.08);
+      border: 1px solid var(--border-green);
+      border-radius: 6px;
+      color: var(--cyber-green);
+      font-family: var(--font-mono);
+      font-size: 0.75rem;
+      text-transform: uppercase;
+      margin-bottom: 0.75rem;
+    }
+
+    .section-title {
+      font-size: clamp(1.8rem, 3.5vw, 2.5rem);
+      font-weight: 800;
+      letter-spacing: -0.02em;
+      margin-bottom: 0.65rem;
+    }
+
+    .section-subtitle {
+      color: var(--text-dim);
+      font-size: 1rem;
+    }
+
+    /* Filter Card */
+    .filter-card {
+      background: var(--bg-card);
+      border: 1px solid var(--border-cyber);
+      border-radius: 12px;
+      padding: 1.5rem;
+      margin-bottom: 2.5rem;
+    }
+
+    .filter-grid {
+      display: grid;
+      grid-template-columns: 1fr 1fr auto;
+      gap: 1.25rem;
+      align-items: end;
+    }
+
+    .filter-field {
+      display: flex;
+      flex-direction: column;
+      gap: 0.45rem;
+    }
+
+    .filter-label {
+      font-size: 0.75rem;
+      font-family: var(--font-mono);
+      color: var(--cyber-cyan);
+      text-transform: uppercase;
+    }
+
+    .cyber-select {
+      width: 100%;
+      padding: 0.65rem 0.9rem;
+      background: rgba(4, 7, 13, 0.95);
+      border: 1px solid var(--border-cyber);
+      border-radius: 6px;
+      color: var(--text-main);
+      font-family: var(--font-mono);
+      font-size: 0.875rem;
+      outline: none;
+      cursor: pointer;
+    }
+
+    .cyber-select:focus {
+      border-color: var(--cyber-cyan);
+      box-shadow: 0 0 10px var(--cyber-cyan-glow);
+    }
+
+    .btn-reset-filters {
+      padding: 0.65rem 1.25rem;
+      background: transparent;
+      border: 1px dashed var(--cyber-rose);
+      color: var(--cyber-rose);
+      border-radius: 6px;
+      font-family: var(--font-mono);
+      font-size: 0.825rem;
+      font-weight: 700;
+      cursor: pointer;
+      transition: all 0.2s ease;
+      white-space: nowrap;
+    }
+
+    .btn-reset-filters:hover {
+      background: var(--cyber-rose);
+      color: #fff;
+    }
+
+    /* Events Grid */
+    .events-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fill, minmax(320px, 1fr));
+      gap: 1.75rem;
+    }
+
+    .event-card {
+      background: var(--bg-card);
+      border: 1px solid var(--border-subtle);
+      border-radius: 12px;
+      overflow: hidden;
+      display: flex;
+      flex-direction: column;
+      justify-content: space-between;
+      transition: transform 0.25s ease, border-color 0.25s ease;
+    }
+
+    .event-card:hover {
+      transform: translateY(-4px);
+      border-color: var(--cyber-cyan);
+      box-shadow: 0 8px 24px rgba(0, 0, 0, 0.6), 0 0 18px var(--cyber-cyan-glow);
+    }
+
+    .card-banner {
+      width: 100%;
+      height: 185px;
+      object-fit: cover;
+      background: #080d1a;
+      border-bottom: 1px solid var(--border-subtle);
+    }
+
+    .card-body {
+      padding: 1.25rem;
+      display: flex;
+      flex-direction: column;
+      gap: 0.65rem;
+      flex: 1;
+    }
+
+    .badge {
+      display: inline-block;
+      align-self: flex-start;
+      padding: 0.22rem 0.65rem;
+      border-radius: 4px;
+      font-family: var(--font-mono);
+      font-size: 0.7rem;
+      font-weight: 700;
+      text-transform: uppercase;
+      letter-spacing: 0.05em;
+    }
+
+    .badge.startup {
+      background: rgba(255, 183, 3, 0.12);
+      border: 1px solid var(--cyber-amber);
+      color: var(--cyber-amber);
+    }
+
+    .badge.tech {
+      background: rgba(0, 255, 102, 0.12);
+      border: 1px solid var(--cyber-green);
+      color: var(--cyber-green);
+    }
+
+    .badge.robo {
+      background: rgba(0, 240, 255, 0.12);
+      border: 1px solid var(--cyber-cyan);
+      color: var(--cyber-cyan);
+    }
+
+    .glitch-hover {
+      font-size: 1.2rem;
+      font-weight: 800;
+      color: var(--text-main);
+      line-height: 1.3;
+    }
+
+    .event-card:hover .glitch-hover {
+      color: var(--cyber-cyan);
+    }
+
+    .event-desc {
+      font-size: 0.88rem;
+      color: var(--text-dim);
+      line-height: 1.5;
+      display: -webkit-box;
+      -webkit-line-clamp: 3;
+      -webkit-box-orient: vertical;
+      overflow: hidden;
+    }
+
+    .event-meta {
+      padding: 0.85rem 1.25rem;
+      background: rgba(4, 7, 13, 0.7);
+      border-top: 1px solid var(--border-subtle);
+      display: flex;
+      flex-direction: column;
+      gap: 0.35rem;
+      font-size: 0.825rem;
+      color: var(--text-dim);
+    }
+
+    .meta-highlight {
+      color: var(--cyber-green);
+      font-family: var(--font-mono);
+      font-size: 0.75rem;
+    }
+
+    .card-action {
+      padding: 0 1.25rem 1.15rem 1.25rem;
+    }
+
+    .btn-register-card {
+      width: 100%;
+      padding: 0.6rem;
+      background: rgba(0, 240, 255, 0.08);
+      border: 1px solid var(--cyber-cyan);
+      border-radius: 6px;
+      color: var(--cyber-cyan);
+      font-family: var(--font-mono);
+      font-size: 0.78rem;
+      font-weight: 700;
+      cursor: pointer;
+      transition: all 0.2s ease;
+    }
+
+    .btn-register-card:hover {
+      background: var(--cyber-cyan);
+      color: #000;
+      box-shadow: 0 0 14px var(--cyber-cyan-glow);
+    }
+
+    .terminal-log {
+      font-family: var(--font-mono);
+      color: var(--cyber-amber);
+      background: rgba(255, 183, 3, 0.08);
+      border: 1px dashed var(--cyber-amber);
+      padding: 2rem;
+      text-align: center;
+      grid-column: 1 / -1;
+      border-radius: 6px;
+    }
+
+    /* Schedule */
+    .schedule-section {
+      padding: 4.5rem 0;
+    }
+
+    .schedule-tabs {
+      display: flex;
+      justify-content: center;
+      gap: 0.5rem;
+      flex-wrap: wrap;
+      margin-bottom: 2.5rem;
+    }
+
+    .tab-btn {
+      padding: 0.5rem 1rem;
+      background: var(--bg-card);
+      border: 1px solid var(--border-subtle);
+      border-radius: 6px;
+      color: var(--text-dim);
+      font-family: var(--font-mono);
+      font-size: 0.825rem;
+      cursor: pointer;
+      transition: all 0.2s ease;
+    }
+
+    .tab-btn:hover, .tab-btn.active {
+      background: rgba(0, 240, 255, 0.15);
+      border-color: var(--cyber-cyan);
+      color: var(--cyber-cyan);
+    }
+
+    .schedule-container {
+      display: flex;
+      flex-direction: column;
+      gap: 2rem;
+    }
+
+    .day-group {
+      background: var(--bg-card);
+      border: 1px solid var(--border-subtle);
+      border-radius: 12px;
+      padding: 1.5rem;
+    }
+
+    .day-heading {
+      font-family: var(--font-mono);
+      font-size: 1.1rem;
+      color: var(--cyber-green);
+      border-bottom: 1px solid var(--border-subtle);
+      padding-bottom: 0.75rem;
+      margin-bottom: 1.25rem;
+    }
+
+    .time-slot-row {
+      display: grid;
+      grid-template-columns: 130px 1fr;
+      gap: 1.5rem;
+      padding: 1rem 0;
+      border-bottom: 1px solid rgba(255, 255, 255, 0.04);
+      align-items: start;
+    }
+
+    .time-slot-row:last-child { border-bottom: none; }
+
+    .time-label {
+      font-family: var(--font-mono);
+      font-size: 1.05rem;
+      font-weight: 800;
+      color: var(--cyber-cyan);
+    }
+
+    .slot-events-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(260px, 1fr));
+      gap: 1.25rem;
+    }
+
+    .slot-item {
+      background: rgba(4, 7, 13, 0.75);
+      border: 1px solid var(--border-subtle);
+      border-radius: 6px;
+      padding: 1.15rem;
+      display: flex;
+      flex-direction: column;
+      gap: 0.5rem;
+    }
+
+    .slot-item.startup { border-left: 3px solid var(--cyber-amber); }
+    .slot-item.tech { border-left: 3px solid var(--cyber-green); }
+    .slot-item.robo { border-left: 3px solid var(--cyber-cyan); }
+
+    .slot-item h4 {
+      font-size: 1rem;
+      font-weight: 700;
+      color: var(--text-main);
+    }
+
+    .slot-venue {
+      font-size: 0.825rem;
+      color: var(--text-dim);
+    }
+
+    .conflict-flag {
+      display: inline-block;
+      padding: 0.3rem 0.6rem;
+      background: rgba(255, 183, 3, 0.15);
+      border: 1px solid var(--cyber-amber);
+      color: var(--cyber-amber);
+      font-family: var(--font-mono);
+      font-size: 0.725rem;
+      font-weight: 700;
+      border-radius: 4px;
+    }
+
+    /* Challenge Box */
+    .challenge-card {
+      margin-top: 3rem;
+      background: linear-gradient(135deg, rgba(16, 24, 48, 0.9) 0%, rgba(8, 14, 28, 0.95) 100%);
+      border: 1px solid var(--border-green);
+      border-radius: 12px;
+      padding: 1.75rem;
+    }
+
+    .challenge-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(240px, 1fr));
+      gap: 1.25rem;
+      margin-top: 1.25rem;
+    }
+
+    .reasoning-box {
+      background: rgba(4, 7, 13, 0.6);
+      border: 1px solid var(--border-subtle);
+      border-radius: 6px;
+      padding: 1.15rem;
+    }
+
+    .reasoning-num {
+      font-family: var(--font-mono);
+      font-size: 0.725rem;
+      color: var(--cyber-cyan);
+      margin-bottom: 0.25rem;
+    }
+
+    .reasoning-title {
+      font-size: 0.95rem;
+      font-weight: 700;
+      color: var(--text-main);
+      margin-bottom: 0.35rem;
+    }
+
+    .reasoning-desc {
+      font-size: 0.825rem;
+      color: var(--text-dim);
+      line-height: 1.5;
+    }
+
+    /* Register Section */
+    .register-section {
+      padding: 4.5rem 0;
+    }
+
+    .register-layout {
+      display: grid;
+      grid-template-columns: 1fr 1.35fr;
+      gap: 2.5rem;
+      align-items: start;
+    }
+
+    .venue-card {
+      background: var(--bg-card);
+      border: 1px solid var(--border-cyber);
+      border-radius: 12px;
+      padding: 2rem;
+    }
+
+    .venue-card h3 { font-size: 1.35rem; margin-bottom: 0.65rem; }
+    .venue-card p { font-size: 0.9rem; color: var(--text-dim); margin-bottom: 1.5rem; }
+
+    .venue-info-item {
+      display: flex;
+      align-items: center;
+      gap: 0.85rem;
+      padding: 0.85rem;
+      background: rgba(4, 7, 13, 0.6);
+      border: 1px solid var(--border-subtle);
+      border-radius: 6px;
+      margin-bottom: 0.75rem;
+    }
+
+    .venue-info-icon {
+      font-size: 1.2rem;
+    }
+
+    .venue-info-text strong {
+      font-family: var(--font-mono);
+      font-size: 0.725rem;
+      color: var(--text-muted);
+      text-transform: uppercase;
+      display: block;
+    }
+
+    .venue-info-text span, .venue-info-text a {
+      font-size: 0.9rem;
+      color: var(--text-main);
+      font-weight: 600;
+      text-decoration: none;
+    }
+
+    .venue-info-text a:hover { color: var(--cyber-cyan); }
+
+    /* Form Card */
+    .cyber-form-card {
+      background: var(--bg-card);
+      border: 1px solid var(--border-green);
+      border-radius: 12px;
+      padding: 2rem;
+    }
+
+    .form-heading { font-size: 1.4rem; margin-bottom: 0.3rem; }
+    .form-sub { color: var(--text-dim); font-size: 0.85rem; margin-bottom: 1.5rem; }
+
+    .registration-form {
+      display: flex;
+      flex-direction: column;
+      gap: 1rem;
+    }
+
+    .form-row-2 {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 1rem;
+    }
+
+    .form-group {
+      display: flex;
+      flex-direction: column;
+      gap: 0.35rem;
+    }
+
+    .form-label {
+      font-family: var(--font-mono);
+      font-size: 0.75rem;
+      color: var(--text-main);
+      text-transform: uppercase;
+    }
+
+    .cyber-input {
+      width: 100%;
+      padding: 0.7rem 0.85rem;
+      background: rgba(4, 7, 13, 0.95);
+      border: 1px solid var(--border-subtle);
+      border-radius: 6px;
+      color: var(--text-main);
+      font-family: var(--font-mono);
+      font-size: 0.875rem;
+    }
+
+    .cyber-input:focus {
+      outline: none;
+      border-color: var(--cyber-green);
+      box-shadow: 0 0 10px var(--cyber-green-glow);
+    }
+
+    .cyber-error {
+      font-family: var(--font-mono);
+      font-size: 0.75rem;
+      color: var(--cyber-rose);
+      min-height: 1rem;
+    }
+
+    .btn-submit-cyber {
+      width: 100%;
+      padding: 0.85rem;
+      background: linear-gradient(135deg, var(--cyber-green), #00b347);
+      border: none;
+      border-radius: 6px;
+      color: #030712;
+      font-family: var(--font-mono);
+      font-size: 0.925rem;
+      font-weight: 800;
+      cursor: pointer;
+      box-shadow: 0 0 18px var(--cyber-green-glow);
+      transition: all 0.25s ease;
+      margin-top: 0.5rem;
+    }
+
+    .btn-submit-cyber:hover {
+      box-shadow: 0 0 25px rgba(0, 255, 102, 0.75);
+      transform: translateY(-2px);
+    }
+
+    .cyber-success {
+      margin-top: 1.25rem;
+      padding: 1rem;
+      background: rgba(0, 255, 102, 0.08);
+      border: 1px solid var(--cyber-green);
+      border-radius: 6px;
+      font-family: var(--font-mono);
+      font-size: 0.85rem;
+      color: var(--cyber-green);
+      box-shadow: 0 0 20px var(--cyber-green-glow);
+      line-height: 1.5;
+    }
+
+    /* Footer */
+    .site-footer {
+      border-top: 1px solid var(--border-cyber);
+      background: rgba(2, 4, 8, 0.95);
+      padding: 3rem 0 1.75rem 0;
+      position: relative;
+      z-index: 10;
+    }
+
+    .footer-bottom {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      font-family: var(--font-mono);
+      font-size: 0.78rem;
+      color: var(--text-muted);
+      flex-wrap: wrap;
+      gap: 0.75rem;
+    }
+
+    @media (max-width: 768px) {
+      .menu-toggle-btn { display: block; }
+      .nav-links {
+        position: fixed;
+        top: 70px;
+        left: 0;
+        width: 100%;
+        background: rgba(4, 7, 13, 0.98);
+        flex-direction: column;
+        padding: 1.5rem;
+        gap: 1.25rem;
+        border-bottom: 1px solid var(--border-cyber);
+        display: none;
+      }
+      .nav-links.open { display: flex; }
+      .nav-cta { display: none; }
+      .filter-grid { grid-template-columns: 1fr; }
+      .time-slot-row { grid-template-columns: 1fr; gap: 0.5rem; }
+      .register-layout { grid-template-columns: 1fr; }
+      .form-row-2 { grid-template-columns: 1fr; }
+      .fest-stats-grid { grid-template-columns: 1fr 1fr; }
+    }
+  </style>
+</head>
+<body>
+
+  <!-- Falling Matrix Canvas -->
+  <canvas id="matrixCanvas" aria-hidden="true"></canvas>
+
+  <!-- Navigation Header -->
+  <header class="site-header">
+    <div class="container nav-wrapper">
+      <a href="#hero" class="brand-logo" aria-label="TechToCheck 2026 Homepage">
+        <div class="brand-icon-box">⚡</div>
+        <div>
+          <span class="brand-title">TECHTOCHECK<span style="color: var(--cyber-green);">'26</span></span>
+          <span class="brand-sub">S.A.T.I. VIDISHA (M.P.)</span>
+        </div>
+      </a>
+
+      <nav aria-label="Main Navigation">
+        <ul id="navLinks" class="nav-links">
+          <li><a href="#hero" class="nav-link">&gt; HOME</a></li>
+          <li><a href="#events" class="nav-link">&gt; MODULES</a></li>
+          <li><a href="#schedule" class="nav-link">&gt; TIMELINE</a></li>
+          <li><a href="#challenge" class="nav-link">&gt; REASONING</a></li>
+          <li><a href="#register" class="nav-link">&gt; UPLINK</a></li>
+        </ul>
+      </nav>
+
+      <a href="#register" class="nav-cta">&gt; REGISTER_PASS</a>
+      <button type="button" id="menuToggle" class="menu-toggle-btn" aria-label="Toggle navigation" aria-expanded="false">&gt; MENU</button>
+    </div>
+  </header>
+
+  <!-- Main Content -->
+  <main>
+    <!-- Hero Section -->
+    <section id="hero" class="hero-section">
+      <div class="container">
+        <div class="hero-pill">
+          <span class="blink-dot" aria-hidden="true"></span>
+          <span>TECHTOCHECK 2026 // 20/11/26 TO 25/11/26 // S.A.T.I. VIDISHA</span>
+        </div>
+
+        <h1 class="hero-title">
+          Samrat Ashok Technological Institute <br>
+          <span class="gradient-heading">TechToCheck 2026</span>
+        </h1>
+
+        <p class="hero-desc">
+          Official engineering and startup symposium bringing together students across Robotics, Model Prototypes, 
+          Circuit Debugging, and Idea Pitching from 20/11/26 to 25/11/26.
+        </p>
+
+        <div class="hero-buttons">
+          <a href="#events" class="btn-cyber-primary">&gt; EXPLORE_MODULES (7)</a>
+          <a href="#schedule" class="btn-cyber-secondary">&gt; TIMELINE_SCHEDULE</a>
+        </div>
+
+        <div class="fest-stats-grid">
+          <div class="stat-item"><span class="stat-val">7</span><span class="stat-tag">Modules</span></div>
+          <div class="stat-item"><span class="stat-val">6</span><span class="stat-tag">Days</span></div>
+          <div class="stat-item"><span class="stat-val">3</span><span class="stat-tag">Domain Tracks</span></div>
+          <div class="stat-item"><span class="stat-val">100%</span><span class="stat-tag">Verified Frontend</span></div>
+        </div>
+      </div>
+    </section>
+
+    <!-- Events Section -->
+    <section id="events" class="container" style="padding: 3rem 0;">
+      <div class="section-header">
+        <div class="terminal-badge">&gt; COMPETITIONS &amp; MODULES</div>
+        <h2 class="section-title">Event Listings</h2>
+        <p class="section-subtitle">Select domain category or event date to filter live modules.</p>
+      </div>
+
+      <div class="filter-card">
+        <div class="filter-grid">
+          <div class="filter-field">
+            <label for="categoryFilter" class="filter-label">&gt; TRACK_CATEGORY</label>
+            <select id="categoryFilter" class="cyber-select">
+              <option value="All">All Categories (3 Tracks)</option>
+              <option value="Creative & Startup">Creative &amp; Startup</option>
+              <option value="Technical & Research">Technical &amp; Research</option>
+              <option value="Robotics & Hardware">Robotics &amp; Hardware</option>
+            </select>
+          </div>
+
+          <div class="filter-field">
+            <label for="dayFilter" class="filter-label">&gt; TIMELINE_DATE</label>
+            <select id="dayFilter" class="cyber-select">
+              <option value="All">All Dates (20-25 Nov)</option>
+              <option value="20/11/26">20/11/26</option>
+              <option value="21/11/26">21/11/26</option>
+              <option value="22/11/26">22/11/26 (Parallel Track)</option>
+              <option value="23/11/26">23/11/26</option>
+              <option value="24/11/26">24/11/26</option>
+              <option value="25/11/26">25/11/26</option>
+            </select>
+          </div>
+
+          <div>
+            <button type="button" id="resetFilters" class="btn-reset-filters">&gt; RESET_FILTERS</button>
+          </div>
+        </div>
+      </div>
+
+      <div id="eventsGrid" class="events-grid" aria-live="polite"></div>
+    </section>
+
+    <!-- Schedule Section -->
+    <section id="schedule" class="container schedule-section">
+      <div class="section-header">
+        <div class="terminal-badge">&gt; TIMELINE ITINERARY</div>
+        <h2 class="section-title">Day-Wise &amp; Time-Wise Schedule</h2>
+        <p class="section-subtitle">Concurrent sessions on 22/11/26 share the 11:00 AM slot clearly with parallel track indicators.</p>
+      </div>
+
+      <div class="schedule-tabs" role="tablist">
+        <button type="button" class="tab-btn active" data-day="All">&gt; ALL_DATES</button>
+        <button type="button" class="tab-btn" data-day="20/11/26">20/11/26</button>
+        <button type="button" class="tab-btn" data-day="21/11/26">21/11/26</button>
+        <button type="button" class="tab-btn" data-day="22/11/26">22/11/26 ⚡ Parallel</button>
+        <button type="button" class="tab-btn" data-day="23/11/26">23/11/26</button>
+        <button type="button" class="tab-btn" data-day="24/11/26">24/11/26</button>
+        <button type="button" class="tab-btn" data-day="25/11/26">25/11/26</button>
+      </div>
+
+      <div id="scheduleContainer" class="schedule-container" aria-live="polite"></div>
+
+      <!-- Analytical Challenge Card -->
+      <div id="challenge" class="challenge-card">
+        <h3 style="font-size: 1.25rem; color: var(--text-main); margin-bottom: 0.5rem;">
+          ⚡ Analytical Challenge: Readability of Shared Time Slots
+        </h3>
+        <p style="font-size: 0.85rem; color: var(--text-dim);">
+          On <strong>22/11/26 at 11:00 AM</strong>, two events run concurrently at S.A.T.I.:
+        </p>
+
+        <div class="challenge-grid">
+          <div class="reasoning-box">
+            <div class="reasoning-num">&gt; RULE_01</div>
+            <h4 class="reasoning-title">Slot Unification</h4>
+            <p class="reasoning-desc">11:00 AM is anchored once on the timeline rather than repeated, immediately signifying concurrent tracks.</p>
+          </div>
+          <div class="reasoning-box">
+            <div class="reasoning-num">&gt; RULE_02</div>
+            <h4 class="reasoning-title">Distinct Location Badging</h4>
+            <p class="reasoning-desc"><em>Rock with your Robo</em> displays 📍 IT Garden, while <em>Cyber Circuit Debugging</em> displays 📍 Electronics Lab 3.</p>
+          </div>
+          <div class="reasoning-box">
+            <div class="reasoning-num">&gt; RULE_03</div>
+            <h4 class="reasoning-title">Parallel Flag Alert</h4>
+            <p class="reasoning-desc">Overlapping cards show <code>⚡ PARALLEL_SLOT // CHOOSE_TRACK</code> warning banners.</p>
+          </div>
+          <div class="reasoning-box">
+            <div class="reasoning-num">&gt; RULE_04</div>
+            <h4 class="reasoning-title">Zero-Lag Track Filtering</h4>
+            <p class="reasoning-desc">Filtering by "Robotics & Hardware" or "Technical & Research" isolates that specific track with zero confusion.</p>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- Registration Section -->
+    <section id="register" class="container register-section">
+      <div class="section-header">
+        <div class="terminal-badge">&gt; REGISTRATION UPLINK</div>
+        <h2 class="section-title">Operator Registration</h2>
+        <p class="section-subtitle">Required-field and email-format validation with on-screen terminal confirmation.</p>
+      </div>
+
+      <div class="register-layout">
+        <div class="venue-card">
+          <h3>Institution Coordinate</h3>
+          <p>Samrat Ashok Technological Institute (S.A.T.I.), Civil Lines, Vidisha (M.P.) - 464001.</p>
+
+          <div class="venue-info-item">
+            <span class="venue-info-icon">📍</span>
+            <div class="venue-info-text">
+              <strong>Campus Location</strong>
+              <span>S.A.T.I. Vidisha (Madhya Pradesh)</span>
+            </div>
+          </div>
+
+          <div class="venue-info-item">
+            <span class="venue-info-icon">✉️</span>
+            <div class="venue-info-text">
+              <strong>Help Desk</strong>
+              <a href="mailto:fest@example.edu">fest@example.edu</a>
+            </div>
+          </div>
+
+          <div class="venue-info-item">
+            <span class="venue-info-icon">🏛️</span>
+            <div class="venue-info-text">
+              <strong>Venues</strong>
+              <span>IT Garden, Seminar Hall, Room 216, Smart Classroom</span>
+            </div>
+          </div>
+        </div>
+
+        <div class="cyber-form-card">
+          <h3 class="form-heading">Registration Terminal</h3>
+          <p class="form-sub">Enter operator credentials to claim festival pass.</p>
+
+          <form id="registrationForm" class="registration-form" novalidate>
+            <div class="form-row-2">
+              <div class="form-group">
+                <label for="fullName" class="form-label">&gt; Operator Full Name *</label>
+                <input type="text" id="fullName" class="cyber-input" placeholder="e.g. Alex Morgan" required autocomplete="name">
+                <span id="nameError" class="cyber-error" aria-live="polite"></span>
+              </div>
+              <div class="form-group">
+                <label for="college" class="form-label">&gt; Institute / Branch *</label>
+                <input type="text" id="college" class="cyber-input" value="S.A.T.I. Vidisha" required autocomplete="organization">
+                <span id="collegeError" class="cyber-error" aria-live="polite"></span>
+              </div>
+            </div>
+
+            <div class="form-group">
+              <label for="email" class="form-label">&gt; Email Address *</label>
+              <input type="email" id="email" class="cyber-input" placeholder="operator@satiengg.in" required autocomplete="email">
+              <span id="emailError" class="cyber-error" aria-live="polite"></span>
+            </div>
+
+            <div class="form-group">
+              <label for="eventSelect" class="form-label">&gt; Target Event Module *</label>
+              <select id="eventSelect" class="cyber-select" required>
+                <option value="" disabled selected>-- SELECT TARGET EVENT MODULE --</option>
+              </select>
+              <span id="eventError" class="cyber-error" aria-live="polite"></span>
+            </div>
+
+            <button type="submit" class="btn-submit-cyber">&gt; TRANSMIT_REGISTRATION</button>
+
+            <div id="formSuccess" class="cyber-success" hidden aria-live="polite"></div>
+          </form>
+        </div>
+      </div>
+    </section>
+  </main>
+
+  <footer class="site-footer">
+    <div class="container footer-bottom">
+      <span>&copy; 2026 S.A.T.I. Vidisha &bull; TechToCheck Organizing Committee</span>
+      <span>fest@example.edu &bull; All 7 Modules Online</span>
+    </div>
+  </footer>
+
+  <!-- Application Script -->
+  <script>
+    // Image Assets Provided
+    const IMG_CITY = "https://images.unsplash.com/photo-1519501025264-65ba15a82390?auto=format&fit=crop&w=800&q=80";
+    const IMG_STREET = "https://images.unsplash.com/photo-1509198397868-475647b2a1e5?auto=format&fit=crop&w=800&q=80";
+    const IMG_MATRIX = "https://images.unsplash.com/photo-1526374965328-7f61d4dc18c5?auto=format&fit=crop&w=800&q=80";
+
+    // S.A.T.I. Vidisha TechToCheck Events Data (20/11/26 to 25/11/26)
+    // Includes a parallel session on 22/11/26 (11:00 AM) to visibly demonstrate readable shared time slots
+    const eventsData = [
+      {
+        id: 1,
+        title: "Post Your Poster",
+        category: "Creative & Startup",
+        badgeClass: "startup",
+        date: "20/11/26",
+        time: "11:00 AM",
+        venue: "1st & 2nd Floor Left Wing, SATI, Vidisha",
+        image: IMG_CITY,
+        description:
+          "An opportunity for students to present innovative ideas and technical concepts through creative posters, encouraging knowledge sharing, innovation, and effective communication."
+      },
+      {
+        id: 2,
+        title: "Idea Stage",
+        category: "Technical & Research",
+        badgeClass: "tech",
+        date: "21/11/26",
+        time: "11:00 AM",
+        venue: "Seminar Hall, SATI, Vidisha",
+        image: IMG_MATRIX,
+        description:
+          "A platform for students to present their research ideas, technical studies, and innovative solutions. Participants will showcase their work, share insights, and discuss real-world applications in their respective domains."
+      },
+      {
+        id: 3,
+        title: "Rock with your Robo",
+        category: "Robotics & Hardware",
+        badgeClass: "robo",
+        date: "22/11/26",
+        time: "11:00 AM",
+        venue: "IT Garden, SATI, Vidisha",
+        image: IMG_STREET,
+        description:
+          "A robotics competition where participants showcase their robot-building, control, and strategic skills through competitive robotic challenges, emphasizing innovation, engineering, and problem-solving."
+      },
+      {
+        id: 4,
+        title: "Cyber Circuit Debugging (Parallel Track)",
+        category: "Technical & Research",
+        badgeClass: "tech",
+        date: "22/11/26",
+        time: "11:00 AM",
+        venue: "Electronics Lab 3, SATI, Vidisha",
+        image: IMG_MATRIX,
+        description:
+          "Fast-paced hardware & embedded systems troubleshooting challenge running concurrently with Rock with your Robo at 11:00 AM."
+      },
+      {
+        id: 5,
+        title: "MODEL Presentation",
+        category: "Technical & Research",
+        badgeClass: "tech",
+        date: "23/11/26",
+        time: "11:30 AM",
+        venue: "Room 216, SATI, Vidisha",
+        image: IMG_CITY,
+        description:
+          "A platform for students to showcase innovative hardware and software models, demonstrate their working, and explain their technical concepts and practical applications."
+      },
+      {
+        id: 6,
+        title: "ROBO WALK",
+        category: "Robotics & Hardware",
+        badgeClass: "robo",
+        date: "24/11/26",
+        time: "11:00 AM",
+        venue: "IT Garden, SATI, Vidisha",
+        image: IMG_STREET,
+        description:
+          "A robotics competition in which participants design and operate wheel-less bots to navigate a challenging track using walking, crawling, or stepping mechanisms."
+      },
+      {
+        id: 7,
+        title: "GEN IDEA AND START UP",
+        category: "Creative & Startup",
+        badgeClass: "startup",
+        date: "25/11/26",
+        time: "11:00 AM",
+        venue: "Smart Classroom, SATI, Vidisha (MP)",
+        image: IMG_MATRIX,
+        description:
+          "Have an idea that can change the world? This is your stage. Join us to pitch your idea, get mentored by real founders, and learn how to build a startup from scratch. Best ideas get incubation support, prizes & funding guidance."
+      }
+    ];
+
+    // DOM References
+    const eventsGrid = document.getElementById("eventsGrid");
+    const categoryFilter = document.getElementById("categoryFilter");
+    const dayFilter = document.getElementById("dayFilter");
+    const resetFiltersBtn = document.getElementById("resetFilters");
+    const scheduleContainer = document.getElementById("scheduleContainer");
+    const scheduleTabs = document.querySelectorAll(".tab-btn");
+    const eventSelect = document.getElementById("eventSelect");
+    const menuToggle = document.getElementById("menuToggle");
+    const navLinks = document.getElementById("navLinks");
+    const registrationForm = document.getElementById("registrationForm");
+
+    // 1. Render Filtered Event Cards
+    function renderEvents() {
+      const selectedCat = categoryFilter.value;
+      const selectedDay = dayFilter.value;
+
+      const filtered = eventsData.filter((ev) => {
+        const matchCat = selectedCat === "All" || ev.category === selectedCat;
+        const matchDay = selectedDay === "All" || ev.date === selectedDay;
+        return matchCat && matchDay;
+      });
+
+      if (filtered.length === 0) {
+        eventsGrid.innerHTML = `<p class="terminal-log">&gt; ZERO_MODULES_FOUND // ADJUST_FILTERS</p>`;
+        return;
+      }
+
+      eventsGrid.innerHTML = filtered
+        .map(
+          (ev) => `
+          <article class="event-card">
+            <img src="${ev.image}" alt="${ev.title}" class="card-banner" loading="lazy" />
+            <div class="card-body">
+              <span class="badge ${ev.badgeClass}">${ev.category}</span>
+              <h3 class="glitch-hover">${ev.title}</h3>
+              <p class="event-desc">${ev.description}</p>
+            </div>
+            <div class="event-meta">
+              <span>📅 <strong class="meta-highlight">DATE / TIME:</strong> ${ev.date} // ${ev.time}</span>
+              <span>📍 <strong class="meta-highlight">VENUE:</strong> ${ev.venue}</span>
+            </div>
+            <div class="card-action">
+              <button type="button" class="btn-register-card" onclick="quickSelect('${ev.title.replace(/'/g, "\\'")}')">
+                &gt; REGISTER THIS MODULE
+              </button>
+            </div>
+          </article>
+        `
+        )
+        .join("");
+    }
+
+    // 2. Render Readable Schedule with Side-by-Side Concurrent Slot Grouping
+    function renderSchedule(selectedDay = "All") {
+      const allDates = ["20/11/26", "21/11/26", "22/11/26", "23/11/26", "24/11/26", "25/11/26"];
+      const datesToRender = selectedDay === "All" ? allDates : [selectedDay];
+
+      scheduleContainer.innerHTML = datesToRender
+        .map((date) => {
+          const dayEvents = eventsData.filter((ev) => ev.date === date);
+
+          // Group events sharing the same timestamp
+          const groupedByTime = {};
+          dayEvents.forEach((ev) => {
+            if (!groupedByTime[ev.time]) groupedByTime[ev.time] = [];
+            groupedByTime[ev.time].push(ev);
+          });
+
+          const slotsHtml = Object.entries(groupedByTime)
+            .map(([time, slotEvents]) => {
+              const isConcurrent = slotEvents.length > 1;
+              const cardsHtml = slotEvents
+                .map(
+                  (ev) => `
+                  <div class="slot-item ${ev.badgeClass}">
+                    <span class="badge ${ev.badgeClass}">${ev.category}</span>
+                    <h4>${ev.title}</h4>
+                    <p class="slot-venue">📍 ${ev.venue}</p>
+                    ${
+                      isConcurrent
+                        ? `<span class="conflict-flag">⚡ PARALLEL_SLOT // CHOOSE_TRACK</span>`
+                        : ""
+                    }
+                  </div>
+                `
+                )
+                .join("");
+
+              return `
+                <div class="time-slot-row">
+                  <div class="time-label">${time}</div>
+                  <div class="slot-events-grid">${cardsHtml}</div>
+                </div>
+              `;
+            })
+            .join("");
+
+          return `
+            <div class="day-group">
+              <h3 class="day-heading">&gt; DATE_LOG // ${date}</h3>
+              ${slotsHtml}
+            </div>
+          `;
+        })
+        .join("");
+    }
+
+    // 3. Populate Registration Event Select Dropdown
+    function populateDropdown() {
+      eventSelect.innerHTML = `<option value="" disabled selected>-- SELECT TARGET EVENT MODULE --</option>`;
+      eventsData.forEach((ev) => {
+        const opt = document.createElement("option");
+        opt.value = ev.title;
+        opt.textContent = `${ev.title} (${ev.date} @ ${ev.venue})`;
+        eventSelect.appendChild(opt);
+      });
+    }
+
+    window.quickSelect = (title) => {
+      eventSelect.value = title;
+      document.getElementById("register").scrollIntoView({ behavior: "smooth" });
+    };
+
+    // 4. Form Validation & On-Screen Confirmation
+    registrationForm.addEventListener("submit", (e) => {
+      e.preventDefault();
+
+      const fullName = document.getElementById("fullName").value.trim();
+      const email = document.getElementById("email").value.trim();
+      const selectedEvent = document.getElementById("eventSelect").value;
+      const college = document.getElementById("college").value.trim();
+
+      const nameError = document.getElementById("nameError");
+      const emailError = document.getElementById("emailError");
+      const eventError = document.getElementById("eventError");
+      const collegeError = document.getElementById("collegeError");
+      const formSuccess = document.getElementById("formSuccess");
+
+      nameError.textContent = "";
+      emailError.textContent = "";
+      eventError.textContent = "";
+      collegeError.textContent = "";
+      formSuccess.hidden = true;
+
+      let valid = true;
+      const emailPattern = /^[^\s@]+@[^\s@]+\.[^\s@]{2,}$/;
+
+      if (fullName.length < 2) {
+        nameError.textContent = "> ERROR: Operator name required (min 2 chars).";
+        valid = false;
+      }
+      if (!emailPattern.test(email)) {
+        emailError.textContent = "> ERROR: Invalid email format (e.g., user@satiengg.in).";
+        valid = false;
+      }
+      if (!selectedEvent) {
+        eventError.textContent = "> ERROR: Target event module must be selected.";
+        valid = false;
+      }
+      if (college.length < 2) {
+        collegeError.textContent = "> ERROR: Institute/Branch required.";
+        valid = false;
+      }
+
+      if (valid) {
+        formSuccess.textContent = `> UPLINK_CONFIRMED: ${fullName} registered for "${selectedEvent}" at S.A.T.I. Vidisha! Confirmation packet logged for ${email}.`;
+        formSuccess.hidden = false;
+        registrationForm.reset();
+        document.getElementById("college").value = "S.A.T.I. Vidisha";
+      }
+    });
+
+    // Filter & Navigation Event Listeners
+    categoryFilter.addEventListener("change", renderEvents);
+    dayFilter.addEventListener("change", renderEvents);
+    resetFiltersBtn.addEventListener("click", () => {
+      categoryFilter.value = "All";
+      dayFilter.value = "All";
+      renderEvents();
+    });
+
+    scheduleTabs.forEach((btn) => {
+      btn.addEventListener("click", () => {
+        scheduleTabs.forEach((b) => b.classList.remove("active"));
+        btn.classList.add("active");
+        renderSchedule(btn.dataset.day);
+      });
+    });
+
+    menuToggle.addEventListener("click", () => {
+      const isOpen = navLinks.classList.toggle("open");
+      menuToggle.setAttribute("aria-expanded", String(isOpen));
+    });
+
+    // Matrix background animation
+    const canvas = document.getElementById("matrixCanvas");
+    if (canvas) {
+      const ctx = canvas.getContext("2d");
+      let w = (canvas.width = window.innerWidth);
+      let h = (canvas.height = window.innerHeight);
+
+      window.addEventListener("resize", () => {
+        w = canvas.width = window.innerWidth;
+        h = canvas.height = window.innerHeight;
+      });
+
+      const chars = "01SATI VIDISHA TECHTOCHECK 2026 <>/{}[];";
+      const fontSize = 14;
+      const cols = Math.floor(w / fontSize);
+      const drops = Array.from({ length: cols }, () => Math.floor(Math.random() * -100));
+
+      setInterval(() => {
+        ctx.fillStyle = "rgba(4, 7, 13, 0.15)";
+        ctx.fillRect(0, 0, w, h);
+        ctx.fillStyle = "#00ff66";
+        ctx.font = `${fontSize}px monospace`;
+
+        for (let i = 0; i < drops.length; i++) {
+          const text = chars.charAt(Math.floor(Math.random() * chars.length));
+          ctx.fillText(text, i * fontSize, drops[i] * fontSize);
+          if (drops[i] * fontSize > h && Math.random() > 0.975) {
+            drops[i] = 0;
+          }
+          drops[i]++;
+        }
+      }, 45);
+    }
+
+    // Initialize
+    renderEvents();
+    renderSchedule();
+    populateDropdown();
+  </script>
+</body>
+</html>

@@ -1,21 +1,446 @@
-<!doctype html>
-<html lang="en" class="dark">
-  <head>
-    <meta charset="UTF-8" />
-    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title>TechToCheck 2026 - S.A.T.I. Vidisha Fest Portal</title>
-    <meta name="description" content="Official college fest portal for TechToCheck 2026 at S.A.T.I. Vidisha featuring event modules, concurrency-aware schedule, analytical challenge rubric breakdown, and digital registration pass generator." />
-    <meta property="og:title" content="TechToCheck 2026 - S.A.T.I. Vidisha Fest Portal" />
-    <meta property="og:description" content="Official college fest portal for TechToCheck 2026 at S.A.T.I. Vidisha featuring event modules, concurrency-aware schedule, analytical challenge rubric breakdown, and digital registration pass generator." />
-    <meta property="og:type" content="website" />
-    <meta name="twitter:card" content="summary_large_image" />
-    <link rel="preconnect" href="https://fonts.googleapis.com">
-    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-    <link href="https://fonts.googleapis.com/css2?family=JetBrains+Mono:wght@400;500;700&family=Orbitron:wght@500;700;800;900&family=Plus+Jakarta+Sans:wght@400;500;600;700;800&family=Share+Tech+Mono&display=swap" rel="stylesheet">
-  </head>
-  <body class="bg-[#05050A] text-neutral-100 antialiased selection:bg-[#00f0ff]/30 selection:text-[#00f0ff]">
-    <div id="root"></div>
-    <script type="module" src="/src/main.tsx"></script>
-  </body>
-</html>
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta name="description" content="S.A.T.I. Vidisha TechToCheck 2026 - Official Technical & Cultural Festival Web Portal. Discover 7 flagship event modules, dynamic schedule, and instant registration uplink.">
+  <meta name="theme-color" content="#04070d">
+  <title>S.A.T.I. Vidisha — TechToCheck 2026</title>
+  <link rel="stylesheet" href="css/styles.css">
+</head>
+<body>
 
+  <!-- Matrix Background Canvas -->
+  <canvas id="matrixCanvas" aria-hidden="true"></canvas>
+
+  <!-- ==========================================================================
+       Header & Navigation
+       ========================================================================== -->
+  <header class="site-header">
+    <div class="container nav-wrapper">
+      <a href="#hero" class="brand-logo" aria-label="TechToCheck 2026 Homepage">
+        <div class="brand-icon-box" aria-hidden="true">
+          <svg width="20" height="20" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+            <polyline points="4 17 10 11 4 5"></polyline>
+            <line x1="12" y1="19" x2="20" y2="19"></line>
+          </svg>
+        </div>
+        <div>
+          <span class="brand-title">TECHTOCHECK<span style="color: var(--cyber-green);">'26</span></span>
+          <span class="brand-sub">S.A.T.I. VIDISHA (M.P.)</span>
+        </div>
+      </a>
+
+      <!-- Desktop & Mobile Navigation Links -->
+      <nav aria-label="Main Navigation">
+        <ul id="navLinks" class="nav-links">
+          <li><a href="#hero" class="nav-link active">&gt; HOME</a></li>
+          <li><a href="#events" class="nav-link">&gt; MODULES</a></li>
+          <li><a href="#schedule" class="nav-link">&gt; TIMELINE</a></li>
+          <li><a href="#challenge" class="nav-link">&gt; REASONING</a></li>
+          <li><a href="#register" class="nav-link">&gt; UPLINK</a></li>
+        </ul>
+      </nav>
+
+      <!-- Terminal CTA Action -->
+      <a href="#register" class="nav-cta">
+        <span>&gt; REGISTER_PASS</span>
+      </a>
+
+      <!-- Mobile Menu Toggle Button -->
+      <button 
+        type="button" 
+        id="menuToggle" 
+        class="menu-toggle-btn" 
+        aria-label="Toggle Navigation Menu" 
+        aria-expanded="false" 
+        aria-controls="navLinks"
+      >
+        &gt; MENU
+      </button>
+    </div>
+  </header>
+
+  <!-- ==========================================================================
+       Main Content
+       ========================================================================== -->
+  <main>
+
+    <!-- 1. HERO SECTION -->
+    <section id="hero" class="hero-section">
+      <div class="container">
+        
+        <div class="hero-pill">
+          <span class="blink-dot" aria-hidden="true"></span>
+          <span>TECHTOCHECK 2026 // 20/11/26 TO 25/11/26 // S.A.T.I. CAMPUS</span>
+        </div>
+
+        <h1 class="hero-title">
+          Samrat Ashok Technological Institute <br>
+          <span class="gradient-heading">TechToCheck 2026</span>
+        </h1>
+
+        <p class="hero-desc">
+          The ultimate multidisciplinary collegiate summit uniting Creative Startups, Cutting-Edge Research, 
+          Hardware Robotics, and Circuit Debugging. Six consecutive days of innovation at S.A.T.I. Vidisha (M.P.).
+        </p>
+
+        <div class="hero-buttons">
+          <a href="#events" class="btn-cyber-primary">
+            <span>&gt; EXPLORE_MODULES (7)</span>
+          </a>
+          <a href="#schedule" class="btn-cyber-secondary">
+            <span>&gt; VIEW_SCHEDULE_LOG</span>
+          </a>
+        </div>
+
+        <!-- Metric Highlight Bar -->
+        <div class="fest-stats-grid">
+          <div class="stat-item">
+            <span class="stat-val">7</span>
+            <span class="stat-tag">Event Modules</span>
+          </div>
+          <div class="stat-item">
+            <span class="stat-val">6</span>
+            <span class="stat-tag">Active Days</span>
+          </div>
+          <div class="stat-item">
+            <span class="stat-val">3</span>
+            <span class="stat-tag">Domain Tracks</span>
+          </div>
+          <div class="stat-item">
+            <span class="stat-val">100%</span>
+            <span class="stat-tag">Hands-on Combat</span>
+          </div>
+        </div>
+
+      </div>
+    </section>
+
+    <!-- 2. EVENTS SECTION & FILTER TOOLBAR -->
+    <section id="events" class="events-section">
+      <div class="container">
+        
+        <div class="section-header">
+          <div class="terminal-badge">
+            <span class="terminal-prefix">&gt;</span> COMPETITIONS &amp; STAGES
+          </div>
+          <h2 class="section-title">Festival Event Modules</h2>
+          <p class="section-subtitle">
+            Filter by domain track or festival date to discover challenges, exhibition stages, and competitive arenas.
+          </p>
+        </div>
+
+        <!-- Filter Card -->
+        <div class="filter-card">
+          <div class="filter-grid">
+            
+            <div class="filter-field">
+              <label for="categoryFilter" class="filter-label">&gt; TRACK_CATEGORY</label>
+              <select id="categoryFilter" class="cyber-select" aria-label="Filter events by category">
+                <option value="All">All Categories (3 Tracks)</option>
+                <option value="Creative & Startup">Creative &amp; Startup</option>
+                <option value="Technical & Research">Technical &amp; Research</option>
+                <option value="Robotics & Hardware">Robotics &amp; Hardware</option>
+              </select>
+            </div>
+
+            <div class="filter-field">
+              <label for="dayFilter" class="filter-label">&gt; TIMELINE_DATE</label>
+              <select id="dayFilter" class="cyber-select" aria-label="Filter events by date">
+                <option value="All">All Dates (20/11/26 - 25/11/26)</option>
+                <option value="20/11/26">20/11/26 — Post Your Poster</option>
+                <option value="21/11/26">21/11/26 — Idea Stage</option>
+                <option value="22/11/26">22/11/26 — Parallel Track (Robo &amp; Debug)</option>
+                <option value="23/11/26">23/11/26 — MODEL Presentation</option>
+                <option value="24/11/26">24/11/26 — ROBO WALK</option>
+                <option value="25/11/26">25/11/26 — GEN IDEA AND START UP</option>
+              </select>
+            </div>
+
+            <div>
+              <button type="button" id="resetFilters" class="btn-reset-filters">
+                &gt; RESET_FILTERS
+              </button>
+            </div>
+
+          </div>
+        </div>
+
+        <!-- Dynamic Events Grid -->
+        <div id="eventsGrid" class="events-grid" aria-live="polite">
+          <!-- Populated dynamically by app.js -->
+        </div>
+
+      </div>
+    </section>
+
+    <!-- 3. SCHEDULE SECTION (DAY-WISE & TIME-WISE) -->
+    <section id="schedule" class="schedule-section">
+      <div class="container">
+        
+        <div class="section-header">
+          <div class="terminal-badge">
+            <span class="terminal-prefix">&gt;</span> DAY-WISE &amp; TIME-WISE SCHEDULE
+          </div>
+          <h2 class="section-title">Operational Itinerary</h2>
+          <p class="section-subtitle">
+            Synchronized timeline of all modules. Notice how simultaneous events on 22/11/26 share an 11:00 AM slot cleanly.
+          </p>
+        </div>
+
+        <!-- Schedule Filter Tabs -->
+        <div class="schedule-tabs" role="tablist">
+          <button type="button" class="tab-btn active" data-day="All" role="tab">&gt; ALL_DATES</button>
+          <button type="button" class="tab-btn" data-day="20/11/26" role="tab">20/11/26</button>
+          <button type="button" class="tab-btn" data-day="21/11/26" role="tab">21/11/26</button>
+          <button type="button" class="tab-btn" data-day="22/11/26" role="tab">22/11/26 ⚡ Parallel</button>
+          <button type="button" class="tab-btn" data-day="23/11/26" role="tab">23/11/26</button>
+          <button type="button" class="tab-btn" data-day="24/11/26" role="tab">24/11/26</button>
+          <button type="button" class="tab-btn" data-day="25/11/26" role="tab">25/11/26</button>
+        </div>
+
+        <!-- Schedule Container (Rendered by app.js) -->
+        <div id="scheduleContainer" class="schedule-container" aria-live="polite">
+          <!-- Populated dynamically by app.js -->
+        </div>
+
+        <!-- 4. ANALYTICAL CHALLENGE REASONING CARD -->
+        <div id="challenge" class="challenge-card">
+          <div class="challenge-top">
+            <div class="challenge-icon" aria-hidden="true">⚡</div>
+            <div>
+              <h3 style="font-size: 1.35rem; color: var(--text-main);">Analytical Challenge: Shared Time-Slot Readability</h3>
+              <p style="font-size: 0.9rem; color: var(--text-dim); margin-top: 0.25rem;">
+                Brief explanation of how our schedule maintains total legibility when events occur concurrently:
+              </p>
+            </div>
+          </div>
+
+          <div class="challenge-grid">
+            <div class="reasoning-box">
+              <div class="reasoning-num">&gt; ARCHITECTURE_01</div>
+              <h4 class="reasoning-title">Shared Timestamp Consolidation</h4>
+              <p class="reasoning-desc">
+                On <strong>22/11/26 at 11:00 AM</strong>, both <em>Rock with your Robo</em> and <em>Cyber Circuit Debugging</em> take place. Rather than duplicating 11:00 AM on separate lines, a single time anchor anchors both parallel sessions.
+              </p>
+            </div>
+
+            <div class="reasoning-box">
+              <div class="reasoning-num">&gt; ARCHITECTURE_02</div>
+              <h4 class="reasoning-title">Distinct Color &amp; Venue Badging</h4>
+              <p class="reasoning-desc">
+                <em>Rock with your Robo</em> carries a blue Robotics badge at <strong>IT Garden</strong>, whereas <em>Cyber Circuit Debugging</em> features a green Tech badge at <strong>Electronics Lab 3</strong>. Color &amp; venue differences eliminate physical confusion instantly.
+              </p>
+            </div>
+
+            <div class="reasoning-box">
+              <div class="reasoning-num">&gt; ARCHITECTURE_03</div>
+              <h4 class="reasoning-title">Side-by-Side Parallel Grid</h4>
+              <p class="reasoning-desc">
+                Concurrent sessions expand into responsive side-by-side cards with an attention-grabbing <code>⚡ PARALLEL_SLOT // CHOOSE_TRACK</code> flag, clearly signaling parallel attendance choices to participants.
+              </p>
+            </div>
+
+            <div class="reasoning-box">
+              <div class="reasoning-num">&gt; ARCHITECTURE_04</div>
+              <h4 class="reasoning-title">Instant Track Isolation</h4>
+              <p class="reasoning-desc">
+                Attendees exclusively interested in Robotics or Technical research can toggle the Category or Day dropdowns at any time to instantly hide the parallel track, zeroing out visual clutter.
+              </p>
+            </div>
+          </div>
+        </div>
+
+      </div>
+    </section>
+
+    <!-- 5. REGISTRATION FORM & CAMPUS UPLINK -->
+    <section id="register" class="register-section">
+      <div class="container">
+        
+        <div class="section-header">
+          <div class="terminal-badge">
+            <span class="terminal-prefix">&gt;</span> REGISTRATION &amp; ACCESS UPLINK
+          </div>
+          <h2 class="section-title">Operator Registration</h2>
+          <p class="section-subtitle">
+            Secure your spot in TechToCheck 2026 competitions. Instant local validation with on-screen confirmation packet.
+          </p>
+        </div>
+
+        <div class="register-layout">
+          
+          <!-- Venue & Institution Information -->
+          <div class="venue-card">
+            <h3>Institution &amp; Contact Desk</h3>
+            <p>
+              Samrat Ashok Technological Institute (S.A.T.I.) is an Autonomous Grant-in-Aid Institution established in 1960 in Vidisha, Madhya Pradesh.
+            </p>
+
+            <div class="venue-info-list">
+              <div class="venue-info-item">
+                <div class="venue-info-icon" aria-hidden="true">📍</div>
+                <div class="venue-info-text">
+                  <strong>Campus Coordinates</strong>
+                  <span>Civil Lines, Vidisha, Madhya Pradesh - 464001</span>
+                </div>
+              </div>
+
+              <div class="venue-info-item">
+                <div class="venue-info-icon" aria-hidden="true">✉️</div>
+                <div class="venue-info-text">
+                  <strong>Official Contact Uplink</strong>
+                  <a href="mailto:fest@example.edu">fest@example.edu</a>
+                </div>
+              </div>
+
+              <div class="venue-info-item">
+                <div class="venue-info-icon" aria-hidden="true">🏛️</div>
+                <div class="venue-info-text">
+                  <strong>Key Arenas</strong>
+                  <span>IT Garden &bull; Seminar Hall &bull; Smart Classroom &bull; Room 216</span>
+                </div>
+              </div>
+            </div>
+
+            <div style="margin-top: 1.5rem; padding: 1rem; background: rgba(0, 255, 102, 0.05); border: 1px dashed var(--border-green); border-radius: var(--radius-sm);">
+              <span class="font-mono" style="font-size: 0.8rem; color: var(--cyber-green); display: block; margin-bottom: 0.25rem;">
+                &gt; NOTICE // ATTENDEES
+              </span>
+              <p style="font-size: 0.825rem; color: var(--text-dim); margin-bottom: 0;">
+                All participants must carry their college identity card. Hardware prototypes and robot bots will undergo mandatory technical inspection prior to trial runs.
+              </p>
+            </div>
+          </div>
+
+          <!-- Registration Form -->
+          <div class="cyber-form-card">
+            <h3 class="form-heading">Event Registration Terminal</h3>
+            <p class="form-sub">Enter required operator credentials to confirm your spot.</p>
+
+            <form id="registrationForm" class="registration-form" novalidate>
+              
+              <div class="form-row-2">
+                <div class="form-group">
+                  <label for="fullName" class="form-label">&gt; Operator Full Name *</label>
+                  <input 
+                    type="text" 
+                    id="fullName" 
+                    class="cyber-input" 
+                    placeholder="e.g. Alex Morgan" 
+                    required 
+                    autocomplete="name"
+                  >
+                  <span id="nameError" class="cyber-error" aria-live="polite"></span>
+                </div>
+
+                <div class="form-group">
+                  <label for="college" class="form-label">&gt; Institute / Branch *</label>
+                  <input 
+                    type="text" 
+                    id="college" 
+                    class="cyber-input" 
+                    value="S.A.T.I. Vidisha" 
+                    required 
+                    autocomplete="organization"
+                  >
+                  <span id="collegeError" class="cyber-error" aria-live="polite"></span>
+                </div>
+              </div>
+
+              <div class="form-group">
+                <label for="email" class="form-label">&gt; Contact Email Address *</label>
+                <input 
+                  type="email" 
+                  id="email" 
+                  class="cyber-input" 
+                  placeholder="operator@satiengg.in" 
+                  required 
+                  autocomplete="email"
+                >
+                <span id="emailError" class="cyber-error" aria-live="polite"></span>
+              </div>
+
+              <div class="form-group">
+                <label for="eventSelect" class="form-label">&gt; Target Event Module *</label>
+                <select id="eventSelect" class="cyber-select" required>
+                  <option value="" disabled selected>-- SELECT TARGET EVENT MODULE --</option>
+                  <!-- Populated by app.js populateDropdown() -->
+                </select>
+                <span id="eventError" class="cyber-error" aria-live="polite"></span>
+              </div>
+
+              <button type="submit" class="btn-submit-cyber" id="submitBtn">
+                <span>&gt; TRANSMIT_REGISTRATION</span>
+              </button>
+
+              <!-- On-Screen Confirmation Banner -->
+              <div id="formSuccess" class="cyber-success" hidden aria-live="polite"></div>
+
+            </form>
+          </div>
+
+        </div>
+
+      </div>
+    </section>
+
+  </main>
+
+  <!-- ==========================================================================
+       Footer
+       ========================================================================== -->
+  <footer class="site-footer">
+    <div class="container">
+      <div class="footer-grid">
+        <div class="footer-brand">
+          <a href="#hero" class="brand-logo" style="margin-bottom: 0.5rem;">
+            <span class="brand-title">TECHTOCHECK<span style="color: var(--cyber-green);">'26</span></span>
+          </a>
+          <p>
+            Samrat Ashok Technological Institute (S.A.T.I.), Vidisha (M.P.). Empowering engineering intellect and creative startup ventures since 1960.
+          </p>
+        </div>
+
+        <div>
+          <h4 class="footer-heading">&gt; MODULE_TRACKS</h4>
+          <ul class="footer-links">
+            <li><a href="#events">Creative &amp; Startup</a></li>
+            <li><a href="#events">Technical &amp; Research</a></li>
+            <li><a href="#events">Robotics &amp; Hardware</a></li>
+            <li><a href="#schedule">Parallel Tracks (22 Nov)</a></li>
+          </ul>
+        </div>
+
+        <div>
+          <h4 class="footer-heading">&gt; NAVIGATION</h4>
+          <ul class="footer-links">
+            <li><a href="#hero">Mission Overview</a></li>
+            <li><a href="#events">All 7 Modules</a></li>
+            <li><a href="#schedule">Timeline Schedule</a></li>
+            <li><a href="#register">Operator Uplink</a></li>
+          </ul>
+        </div>
+
+        <div>
+          <h4 class="footer-heading">&gt; INQUIRIES</h4>
+          <ul class="footer-links">
+            <li><a href="mailto:fest@example.edu">fest@example.edu</a></li>
+            <li><a href="#register">Civil Lines, Vidisha (M.P.)</a></li>
+            <li><a href="#challenge">Analytical Concurrency</a></li>
+          </ul>
+        </div>
+      </div>
+
+      <div class="footer-bottom">
+        <span>&copy; 2026 S.A.T.I. Vidisha &bull; TechToCheck Organizing Committee.</span>
+        <span>STATUS: SYSTEM_READY // ZERO_ERRORS</span>
+      </div>
+    </div>
+  </footer>
+
+  <!-- Application Logic -->
+  <script src="js/app.js"></script>
+</body>
+</html>
